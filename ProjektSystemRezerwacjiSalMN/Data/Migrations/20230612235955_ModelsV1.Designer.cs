@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektSystemRezerwacjiSalMN.Data;
 
@@ -11,9 +12,10 @@ using ProjektSystemRezerwacjiSalMN.Data;
 namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230612235955_ModelsV1")]
+    partial class ModelsV1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "845b501d-b8b7-4185-b3e3-3bd2a56bc95b",
+                            ConcurrencyStamp = "0a7eabc6-6e50-497a-a0d3-d6d0749fe1ae",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -289,24 +291,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Equipment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Equipment");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -358,21 +342,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("RoomCategory");
-                });
-
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.RoomEquipment", b =>
-                {
-                    b.Property<int>("RoomId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EquipmentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoomId", "EquipmentId");
-
-                    b.HasIndex("EquipmentId");
-
-                    b.ToTable("RoomEquipment");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -456,25 +425,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.RoomEquipment", b =>
-                {
-                    b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Equipment", "Equipment")
-                        .WithMany("RoomEquipments")
-                        .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Room", "Room")
-                        .WithMany("RoomEquipments")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Equipment");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Building", b =>
                 {
                     b.Navigation("Rooms");
@@ -485,16 +435,9 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.Navigation("RoomCategories");
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Equipment", b =>
-                {
-                    b.Navigation("RoomEquipments");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Room", b =>
                 {
                     b.Navigation("RoomCategories");
-
-                    b.Navigation("RoomEquipments");
                 });
 #pragma warning restore 612, 618
         }

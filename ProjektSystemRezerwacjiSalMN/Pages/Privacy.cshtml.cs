@@ -5,7 +5,7 @@ using System.Data;
 
 namespace ProjektSystemRezerwacjiSalMN.Pages
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize (Roles = "ADMINISTRATOR")]
     public class PrivacyModel : PageModel
     {
         private readonly ILogger<PrivacyModel> _logger;

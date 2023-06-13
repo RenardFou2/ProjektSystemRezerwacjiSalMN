@@ -27,20 +27,10 @@ namespace ProjektSystemRezerwacjiSalMN.Data
                 .WithMany(c => c.RoomCategories) // jest wiele RoomCategories
                 .HasForeignKey(c => c.CategoryId); // a powizanie jest realizowane przez klucz obcy CategoriesId
 
-            //podobnie z wypozażeniem
-
-            builder.Entity<RoomEquipment>().HasKey(re => new { re.RoomId, re.EquipmentId });
-            builder.Entity<RoomEquipment>()
-                .HasOne<Room>(re => re.Room)
-                .WithMany(r => r.RoomEquipments)
-                .HasForeignKey(r => r.RoomId);
-            builder.Entity<RoomEquipment>()
-                .HasOne<Equipment>(e => e.Equipment)
-                .WithMany(e => e.RoomEquipments)
-                .HasForeignKey(e => e.EquipmentId);
-
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "1", Name = "Administrator", NormalizedName = "ADMINISTRATOR" });
         }
+
+        public DbSet<ProjektSystemRezerwacjiSalMN.Models.Equipment>? Equipment { get; set; }
     }
 }

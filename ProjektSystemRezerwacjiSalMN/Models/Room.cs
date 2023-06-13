@@ -9,22 +9,14 @@ namespace ProjektSystemRezerwacjiSalMN.Models
         public int Id { get; set; }
         [Required]
         [MaxLength(100)]
-        public string Street { get; set; }
+        public string Name { get; set; }
         [Required]
-        [MaxLength(50)]
-        public string City { get; set; }
-        [Required]
-        [MaxLength(6)]
-        [Column(TypeName = "varchar(6)")]
-        public string ZipCode { get; set; }
-        [Required]
-        [MaxLength(2)]
-        public string Country { get; set; }
+        public int Capacity { get; set; }
         public int BuildingId { get; set; }
         public virtual Building Building { get; set; }
 
         public ICollection<RoomCategory>? RoomCategories { get; set; }
-        public ICollection<RoomEquipment>? RoomEquipments { get; set; }
+        public virtual ICollection<Equipment>? Equipments { get; set; }
 
 
 

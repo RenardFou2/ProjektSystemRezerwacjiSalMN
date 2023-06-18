@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
+using ProjektSystemRezerwacjiSalMN.Interface;
+using ProjektSystemRezerwacjiSalMN.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +17,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
+builder.Services.AddTransient<IBookingService, BookingService>();
 
-    
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Password settings.

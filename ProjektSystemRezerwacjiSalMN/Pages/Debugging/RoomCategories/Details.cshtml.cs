@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.RoomCategories
 {
-    [Authorize]
     public class DetailsModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
@@ -21,23 +19,23 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
             _context = context;
         }
 
-      public Building Building { get; set; } = default!; 
+      public RoomCategory RoomCategory { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Building == null)
+            if (id == null || _context.RoomCategory == null)
             {
                 return NotFound();
             }
 
-            var building = await _context.Building.FirstOrDefaultAsync(m => m.Id == id);
-            if (building == null)
+            var roomcategory = await _context.RoomCategory.FirstOrDefaultAsync(m => m.Id == id);
+            if (roomcategory == null)
             {
                 return NotFound();
             }
             else 
             {
-                Building = building;
+                RoomCategory = roomcategory;
             }
             return Page();
         }

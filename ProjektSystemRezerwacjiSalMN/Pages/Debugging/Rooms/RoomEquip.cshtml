@@ -1,0 +1,26 @@
+﻿@page
+@model ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms.RoomEquipModel
+@{
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Equipment name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RoomEquipment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

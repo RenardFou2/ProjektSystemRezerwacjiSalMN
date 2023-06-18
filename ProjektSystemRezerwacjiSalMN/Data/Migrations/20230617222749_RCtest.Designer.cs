@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektSystemRezerwacjiSalMN.Data;
 
@@ -11,9 +12,10 @@ using ProjektSystemRezerwacjiSalMN.Data;
 namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230617222749_RCtest")]
+    partial class RCtest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +54,7 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "03eaf0f1-5fbb-4364-939d-fe085b82b2f8",
+                            ConcurrencyStamp = "70bd926e-d5d8-4adc-aec3-4d6ce9301817",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -233,30 +235,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Data1")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Data2")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Booking");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Building", b =>
                 {
                     b.Property<int>("Id")
@@ -434,15 +412,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Booking", b =>
-                {
-                    b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Equipment", b =>

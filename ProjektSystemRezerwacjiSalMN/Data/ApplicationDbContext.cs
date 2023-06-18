@@ -12,25 +12,29 @@ namespace ProjektSystemRezerwacjiSalMN.Data
         }
         public DbSet<Room> Room { get; set; }
         public DbSet<Building> Building { get; set; }
+        public DbSet<Booking> Booking { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //Ustawiam RoomID i CategoryID jako klucze
-            builder.Entity<RoomCategory>().HasKey(rc => new { rc.RoomId, rc.CategoryId });
+            
             builder.Entity<RoomCategory>()
-                .HasOne<Room>(rc => rc.Room) // dla jednego pokoju
-                .WithMany(r => r.RoomCategories) // jest wiele RoomCategories
-                .HasForeignKey(r => r.RoomId); // a powizanie jest realizowane przez klucz obcy RoomID
+                .HasOne<Room>(rc => rc.Room)
+                .WithMany(r => r.RoomCategories)
+                .HasForeignKey(r => r.RoomId);
             builder.Entity<RoomCategory>()
-                .HasOne<Category>(c => c.Category) // dla jednej kategorii
-                .WithMany(c => c.RoomCategories) // jest wiele RoomCategories
-                .HasForeignKey(c => c.CategoryId); // a powizanie jest realizowane przez klucz obcy CategoriesId
+                .HasOne<Category>(c => c.Category)
+                .WithMany(c => c.RoomCategories)
+                .HasForeignKey(c => c.CategoryId);
 
 
             builder.Entity<IdentityRole>().HasData(new IdentityRole { Id = "1", Name = "Administrator", NormalizedName = "ADMINISTRATOR" });
         }
 
         public DbSet<ProjektSystemRezerwacjiSalMN.Models.Equipment>? Equipment { get; set; }
+
+        public DbSet<ProjektSystemRezerwacjiSalMN.Models.Category>? Category { get; set; }
+
+        public DbSet<ProjektSystemRezerwacjiSalMN.Models.RoomCategory>? RoomCategory { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using ProjektSystemRezerwacjiSalMN.Models;
 
 namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
@@ -32,7 +34,7 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Room == null || Room == null)
+          if (!ModelState.IsValid)
             {
                 return Page();
             }

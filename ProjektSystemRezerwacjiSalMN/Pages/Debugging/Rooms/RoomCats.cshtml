@@ -1,0 +1,26 @@
+﻿@page
+@model ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms.RoomCatsModel
+@{
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Category
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RoomCategory)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

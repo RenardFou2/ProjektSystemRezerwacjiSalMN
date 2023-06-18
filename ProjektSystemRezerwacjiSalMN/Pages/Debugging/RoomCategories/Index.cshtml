@@ -1,11 +1,11 @@
 ﻿@page
-@model ProjektSystemRezerwacjiSalMN.Pages.Debugging.Equipment.IndexModel
+@model ProjektSystemRezerwacjiSalMN.Pages.Debugging.RoomCategories.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>List of equipment</h1>
+<h1>List of RoomCategories</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -14,22 +14,28 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Equipment[0].Name)
+                @Html.DisplayNameFor(model => model.RoomCategory[0].Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Equipment[0].Room)
+                @Html.DisplayNameFor(model => model.RoomCategory[0].Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomCategory[0].Category)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Equipment) {
+@foreach (var item in Model.RoomCategory) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

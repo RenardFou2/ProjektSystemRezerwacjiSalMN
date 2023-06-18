@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektSystemRezerwacjiSalMN.Data;
 
@@ -11,13 +12,14 @@ using ProjektSystemRezerwacjiSalMN.Data;
 namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230617192900_fixes")]
+    partial class fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.18")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -52,7 +54,7 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "03eaf0f1-5fbb-4364-939d-fe085b82b2f8",
+                            ConcurrencyStamp = "12ac067b-a43a-4e78-85de-ab1a3e96d47e",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -233,30 +235,6 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Booking", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("Data1")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Data2")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Booking");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Building", b =>
                 {
                     b.Property<int>("Id")
@@ -326,7 +304,7 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -344,7 +322,7 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BuildingId")
+                    b.Property<int>("BuildingId")
                         .HasColumnType("int");
 
                     b.Property<int>("Capacity")
@@ -364,23 +342,15 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
 
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.RoomCategory", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("RoomId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("RoomCategory");
                 });
@@ -436,20 +406,13 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Booking", b =>
-                {
-                    b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("ProjektSystemRezerwacjiSalMN.Models.Equipment", b =>
                 {
                     b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Room", "Room")
                         .WithMany("Equipments")
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
                 });
@@ -458,7 +421,9 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                 {
                     b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Building", "Building")
                         .WithMany("Rooms")
-                        .HasForeignKey("BuildingId");
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Building");
                 });
@@ -467,11 +432,15 @@ namespace ProjektSystemRezerwacjiSalMN.Data.Migrations
                 {
                     b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Category", "Category")
                         .WithMany("RoomCategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProjektSystemRezerwacjiSalMN.Models.Room", "Room")
                         .WithMany("RoomCategories")
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

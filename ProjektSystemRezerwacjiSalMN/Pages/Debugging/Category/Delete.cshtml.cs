@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Category
 {
-    [Authorize]
     public class DeleteModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
@@ -22,40 +20,40 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
         }
 
         [BindProperty]
-      public Building Building { get; set; } = default!;
+      public Models.Category Category { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Building == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var building = await _context.Building.FirstOrDefaultAsync(m => m.Id == id);
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (building == null)
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                Building = building;
+                Category = category;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Building == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
-            var building = await _context.Building.FindAsync(id);
+            var category = await _context.Category.FindAsync(id);
 
-            if (building != null)
+            if (category != null)
             {
-                Building = building;
-                _context.Building.Remove(Building);
+                Category = category;
+                _context.Category.Remove(Category);
                 await _context.SaveChangesAsync();
             }
 

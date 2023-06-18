@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Equipment
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Category
 {
     public class CreateModel : PageModel
     {
@@ -21,23 +21,22 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Equipment
 
         public IActionResult OnGet()
         {
-        ViewData["RoomId"] = new SelectList(_context.Room, "Id", "Name");
             return Page();
         }
 
         [BindProperty]
-        public ProjektSystemRezerwacjiSalMN.Models.Equipment Equipment { get; set; } = default!;
+        public Models.Category Category { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Equipment == null || Equipment == null)
+          if (!ModelState.IsValid || _context.Category == null || Category == null)
             {
                 return Page();
             }
 
-            _context.Equipment.Add(Equipment);
+            _context.Category.Add(Category);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

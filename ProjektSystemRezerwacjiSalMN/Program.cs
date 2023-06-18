@@ -12,7 +12,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     
-    //Zapytaæ na lekcjis
+    //Zapytaï¿½ na lekcjis
     //.AddRoles<IdentityRole>()
     
     .AddEntityFrameworkStores<ApplicationDbContext>();

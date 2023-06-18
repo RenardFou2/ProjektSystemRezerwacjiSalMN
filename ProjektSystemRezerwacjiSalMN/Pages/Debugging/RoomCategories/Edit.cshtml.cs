@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,9 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.RoomCategories
 {
-    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
@@ -23,22 +21,23 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
         }
 
         [BindProperty]
-        public Room Room { get; set; } = default!;
+        public RoomCategory RoomCategory { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Room == null)
+            if (id == null || _context.RoomCategory == null)
             {
                 return NotFound();
             }
 
-            var room =  await _context.Room.FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null)
+            var roomcategory =  await _context.RoomCategory.FirstOrDefaultAsync(m => m.Id == id);
+            if (roomcategory == null)
             {
                 return NotFound();
             }
-            Room = room;
-           ViewData["BuildingId"] = new SelectList(_context.Building, "Id", "Name");
+            RoomCategory = roomcategory;
+           ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+           ViewData["RoomId"] = new SelectList(_context.Room, "Id", "Name");
             return Page();
         }
 
@@ -51,7 +50,7 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
                 return Page();
             }
 
-            _context.Attach(Room).State = EntityState.Modified;
+            _context.Attach(RoomCategory).State = EntityState.Modified;
 
             try
             {
@@ -59,7 +58,7 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!RoomExists(Room.Id))
+                if (!RoomCategoryExists(RoomCategory.Id))
                 {
                     return NotFound();
                 }
@@ -72,9 +71,9 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
             return RedirectToPage("./Index");
         }
 
-        private bool RoomExists(int id)
+        private bool RoomCategoryExists(int id)
         {
-          return (_context.Room?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.RoomCategory?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

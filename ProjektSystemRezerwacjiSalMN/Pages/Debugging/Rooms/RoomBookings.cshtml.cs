@@ -8,34 +8,32 @@ using ProjektSystemRezerwacjiSalMN.Models;
 namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
 {
     [Authorize]
-    public class RoomCatsModel : PageModel
+    public class RoomBookingModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
 
-        public RoomCatsModel(ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext context)
+        public RoomBookingModel(ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public IList<RoomCategory> RoomCategory { get; set; } = default!;
+        public IList<Models.Booking> RoomBooking { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.RoomCategory == null)
+            if (id == null || _context.Booking == null)
             {
                 return NotFound();
             }
 
-            var roomcategory = await _context.RoomCategory.Where(m => m.RoomId == id)
-                .Include(m => m.Category)
-                .ToListAsync();
+            var roombooking = await _context.Booking.Where(m => m.RoomId == id).ToListAsync();
 
-            if (roomcategory == null)
+            if (roombooking == null)
             {
                 return NotFound();
             }
-            RoomCategory = roomcategory;
+            RoomBooking = roombooking;
             return Page();
         }
     }

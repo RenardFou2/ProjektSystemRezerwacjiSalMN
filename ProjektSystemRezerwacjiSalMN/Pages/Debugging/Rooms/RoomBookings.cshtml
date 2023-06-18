@@ -1,0 +1,42 @@
+﻿@page
+@model ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms.RoomBookingModel
+@{
+}
+
+<h1>Bookings for selected room</h1>
+
+<p>
+    <a asp-page="/Debugging/Bookings/Create">Book room</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Booking ID
+            </th>
+            <th>
+                Booking start
+            </th>
+            <th>
+                Booking end
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.RoomBooking)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data2)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

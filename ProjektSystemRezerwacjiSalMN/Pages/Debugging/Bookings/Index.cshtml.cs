@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Bookings
 {
     [Authorize]
     public class IndexModel : PageModel
@@ -21,13 +21,14 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
             _context = context;
         }
 
-        public IList<Building> Building { get;set; } = default!;
+        public IList<Booking> Booking { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Building != null)
+            if (_context.Booking != null)
             {
-                Building = await _context.Building.ToListAsync();
+                Booking = await _context.Booking
+                .Include(b => b.Room).ToListAsync();
             }
         }
     }

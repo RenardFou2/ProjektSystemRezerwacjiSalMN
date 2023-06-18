@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,6 +7,7 @@ using ProjektSystemRezerwacjiSalMN.Models;
 
 namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Rooms
 {
+    [Authorize]
     public class RoomEquipModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;

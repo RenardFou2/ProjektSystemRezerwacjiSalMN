@@ -3,7 +3,7 @@
 @{
 }
 
-<h1>List of Buildings</h1>
+<h1>List of rooms</h1>
 
 <table class="table">
     <thead>
@@ -29,7 +29,8 @@
                 </td>
                 <td>
                     <a asp-page="/Debugging/Rooms/RoomEquip" asp-route-id="@item.Id">Room's equipment</a> |
-                    <a asp-page="/Debugging/Rooms/RoomCats" asp-route-id="@item.Id">Room's categories</a>
+                    <a asp-page="/Debugging/Rooms/RoomCats" asp-route-id="@item.Id">Room's categories</a> |
+                    <a asp-page="/Debugging/Rooms/RoomBookings" asp-route-id="@item.Id">Check booking</a>
                 </td>
             </tr>
         }

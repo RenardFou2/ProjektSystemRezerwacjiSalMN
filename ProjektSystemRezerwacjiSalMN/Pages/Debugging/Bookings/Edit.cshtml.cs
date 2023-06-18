@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,9 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using ProjektSystemRezerwacjiSalMN.Data;
 using ProjektSystemRezerwacjiSalMN.Models;
 
-namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
+namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Bookings
 {
-    [Authorize]
     public class EditModel : PageModel
     {
         private readonly ProjektSystemRezerwacjiSalMN.Data.ApplicationDbContext _context;
@@ -23,21 +21,22 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
         }
 
         [BindProperty]
-        public Building Building { get; set; } = default!;
+        public Booking Booking { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Building == null)
+            if (id == null || _context.Booking == null)
             {
                 return NotFound();
             }
 
-            var building =  await _context.Building.FirstOrDefaultAsync(m => m.Id == id);
-            if (building == null)
+            var booking =  await _context.Booking.FirstOrDefaultAsync(m => m.Id == id);
+            if (booking == null)
             {
                 return NotFound();
             }
-            Building = building;
+            Booking = booking;
+           ViewData["RoomId"] = new SelectList(_context.Room, "Id", "Name");
             return Page();
         }
 
@@ -50,7 +49,7 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
                 return Page();
             }
 
-            _context.Attach(Building).State = EntityState.Modified;
+            _context.Attach(Booking).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +57,7 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BuildingExists(Building.Id))
+                if (!BookingExists(Booking.Id))
                 {
                     return NotFound();
                 }
@@ -71,9 +70,9 @@ namespace ProjektSystemRezerwacjiSalMN.Pages.Debugging.Buildings
             return RedirectToPage("./Index");
         }
 
-        private bool BuildingExists(int id)
+        private bool BookingExists(int id)
         {
-          return (_context.Building?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Booking?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
